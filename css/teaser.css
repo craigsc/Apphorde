@@ -1,7 +1,12 @@
+body {
+	background: #EEE;
+}
+
 #main {
 	width: 763px;
 	margin: auto;
-	margin-top: 100px;
+	margin-top: 150px;
 	font-family: Helvetica, Arial, sans-serif;
+	font-weight: bold;
 	text-align: center;
 }
