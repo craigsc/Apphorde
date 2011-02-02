@@ -1,0 +1,106 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+.col-width {
+	width: 960px;
+	margin: 0 auto;
+}
+
+.col-right {
+	float: right;
+}
+
+.col-left {
+	float: left;
+}
+
+.flfix {
+	overflow: hidden;
+}
+
+.headline {
+	color: #840303;
+	font-size: 30px;
+	font-family: 'Droid Sans', serif;
+}
+
+#header, #upper {
+	background: #EEE;
+}
+
+#header {
+	border-top: 3px solid #840303;
+}
+
+#top {
+	padding-top: 20px;
+}
+
+#navigation {
+	padding: 13px 0;
+	font-weight: bold;
+}
+
+.nav {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.nav li {
+	float: left;
+	padding: 0 15px;
+}
+
+.nav a {
+	color: #840303;
+	text-decoration: none;
+}
+
+.nav a:hover, .current-page a {
+	color: #000;
+}
+
+#upper {
+	border-bottom: 3px solid #840303;
+	padding: 20px 0;
+}
+
+#upper-left {
+	width: 300px;
+	font-size: 13px;
+	color: #777;
+}
+
+#upper-left p {
+	line-height: 18px;
+}
+
+#upper-right {
+	padding-top: 20px;
+	width: 600px;
+	text-align: center;
+}
+
+.signup_button {
+	background: url(../images/big-button.png);
+	width: 300px;
+	height: 65px;
+	display: inline-block;
+	text-align: center;
+	line-height: 60px;
+	font-weight: bold;
+	color: #FFF;
+	font-size: 24px;
+	text-shadow: 0 1px 0 #2B0101;
+	text-decoration: none;
+}
+
+#android_only {
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 10px;
+}
