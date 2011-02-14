@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href={{ static_url("css/base.css") }}/>
+		<title>{% block title %}AppHorde{% end %}</title>
+	</head>
+	<body>
+		<div id="header" class="grey">
+			<div id="top" class="col-width flfix">
+				<div id="logo" class="col-left">
+					<a href="/"><img src={{ static_url("images/apphorde-medium.png") }}/></a>
+				</div>
+				<div id="navigation" class="col-right">
+					<ul class="nav">
+						{% block nav %}
+						<li><a href="/">Home</a></li>
+						<li><a href="how">How It Works</a></li>
+						<li><a href="dev">Dev Resources</a></li>
+						<li><a href="register">Register</a></li>
+						<li><a href="login">Log In</a></li>
+						{% end %}
+					</ul>
+				</div>
+			</div>
+			{% block header %}
+			{% end %}
+		</div>
+		{% block content %}
+		{% end %}
+		<div id="footer" class="col-width">
+			&copy; 2011 AppHorde
+		</div>
+	</body>
+</html>

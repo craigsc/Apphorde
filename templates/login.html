@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block nav %}
+<li><a href="/">Home</a></li>
+<li><a href="how">How It Works</a></li>
+<li><a href="dev">Dev Resources</a></li>
+<li><a href="register">Register</a></li>
+<li class="current-page"><a href="login">Log In</a></li>
+{% end %}
+
+{% block content %}
+<div class="col-width">
+	<h2 class="subtitle">Log in</h2>
+	<div id="registration">
+		<form method="post" action="login">
+			<label class="required" for="email">Email:</label>
+			<input type="text" name="email" id="email" class="fancy_input"/>		
+			<div class="space">
+				<label class="required" for="password">Password:</label>
+				<input type="password" name="password" id="password" class="fancy_input"/>
+			</div>
+			<input id="submit" type="submit" value="Login"/>
+		</div>
+	</form>
+</div>
+{% end %}

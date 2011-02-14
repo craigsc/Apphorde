@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block nav %}
+<li><a href="/">Home</a></li>
+<li><a href="how">How It Works</a></li>
+<li><a href="dev">Dev Resources</a></li>
+<li class="current-page"><a href="register">Register</a></li>
+<li><a href="login">Log In</a></li>
+{% end %}
+
+{% block content %}
+<div class="col-width">
+	<h2 class="subtitle">Register</h2>
+	{% if 'errors' in globals() %}
+	<div id="errors">
+		<ul>
+			{% for error in errors %}
+			<li>{{ error }}</li>
+			{% end %}
+		</ul>
+	</div>
+	{% end %}
+	<div id="registration">
+		<form method="post" action="register">
+			<label class="required" for="email">Email Address:</label>
+			<input type="text" name="email" id="email" class="fancy_input"/>
+			<p class="detail">This will be your AppHorde login</p>
+			<label class="required" for="password">Password:</label>
+			<input type="password" name="password" id="password" class="fancy_input"/>
+			<p class="detail">6-32 characters</p>
+			<label class="required" for="confirm_password">Confirm Password:</label>
+			<input type="password" name="confirm_password" id="confirm_password" class="fancy_input"/>
+			<div class="check">
+				<label for="accept_tos">
+					<input type="checkbox" name="accept_tos" id="accept_tos"/>
+					I agree to the AppHorde <a href="tos">Terms of Service</a>
+				</label>
+			</div>
+			<input id="submit" type="submit" value="Submit"/>
+		</div>
+	</form>
+</div>
+{% end %}

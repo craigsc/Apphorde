@@ -1,7 +1,11 @@
 body {
 	margin: 0;
 	padding: 0;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.grey {
+	background: #EEE;
 }
 
 .col-width {
@@ -27,16 +31,10 @@ body {
 	font-family: 'Droid Sans', serif;
 }
 
-#header, #upper {
-	background: #EEE;
-}
-
 #header {
 	border-top: 3px solid #840303;
-}
-
-#top {
-	padding-top: 20px;
+	border-bottom: 3px solid #840303;
+	padding: 20px 0;
 }
 
 #logo img {
@@ -73,13 +71,12 @@ body {
 }
 
 #upper {
-	border-bottom: 3px solid #840303;
-	padding: 10px 0 20px 0;
+	padding-top: 10px;
 }
 
 #upper-left {
 	width: 300px;
-	font-size: 13px;
+	font-size: 14px;
 	color: #000;
 }
 
@@ -123,7 +120,7 @@ body {
 }
 
 #features {
-	padding: 20px 0 40px 0;
+	padding: 20px 0;
 	color: #000;
 }
 
@@ -148,11 +145,79 @@ body {
 #features li .description {
 	padding-left: 60px;
 	font-size: 12px;
-	line-height: 1.5em;
+	line-height: 20px;
 }
 
 #footer {
 	border-top: 1px solid #999;
 	padding: 5px;
+	margin-top: 15px;
 	font-size: 11px;
+}
+
+/* Register */
+
+.subtitle {
+	margin: 0;
+	padding-top: 20px;
+	border-bottom: 1px solid #999;
+	color: #840303;
+}
+
+#registration {
+	margin: 20px 20px;
+	font-size: 13px;
+}
+
+#registration a {
+	text-decoration: none;
+}
+
+.required {
+	font-weight: bold;
+	font-size: 15px;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: right;
+	margin: 0;
+}
+
+.check {
+	margin: 10px 0;
+	margin-left: 150px;
+}
+
+label {
+	width: 150px;
+}
+
+.fancy_input {
+	background: #FFF;
+	width: 200px;
+	margin-left: 10px;
+	padding: 5px;
+	border: 1px solid #999;
+}
+
+.detail {
+	color: #777;
+	font-size: 11px;
+	margin: 0 0 10px 165px;
+	font-style: italic;
+}
+
+.space {
+	margin: 10px 0;
+}
+
+#submit {
+	margin: 20px 210px;
+	display: block;
+	width: 100px;
+	font-size: 18px;
+	line-height: 50px;
+}
+
+a {
+	text-decoration: none;
 }
