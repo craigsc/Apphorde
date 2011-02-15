@@ -18,14 +18,16 @@ class Application(tornado.web.Application):
 		handlers = [
 			(r"/", HomeHandler),
 			(r"/register", RegisterHandler),
-			(r"/login", LoginHandler)
+			(r"/login", LoginHandler),
+			(r"/logout", LogoutHandler),
+			(r"/dashboard", DashboardHandler),
 		]
 		settings = {
 			"static_path": os.path.join(os.path.dirname(__file__), "static"),
 			"template_path": os.path.join(os.path.dirname(__file__), "templates"),
 			#"ui_modules": uimodules,
-			#"xsrf_cookies": True,
-			#"cookie_secret":
+			"xsrf_cookies": True,
+			"cookie_secret": "0O[a0ggz2jt+s=j#cM[Dch~YdH*^AQz)m7#C#SxxMe=X",
 			"login_url": "/login",
 			"debug": True,
 		}
@@ -39,7 +41,7 @@ class BaseHandler(tornado.web.RequestHandler):
 		return self.application.db
 		
 	def get_current_user(self):
-		user_id = self.get_secure_cookie("")
+		user_id = self.get_secure_cookie("user")
 		if not user_id: return None
 		return self.db.users.find_one({'_id': ObjectId(user_id)})
 
@@ -82,24 +84,45 @@ class RegisterHandler(BaseHandler):
 		if len(errors) == 0:
 			#insert new user entry
 			user_id = self.db.users.insert({'email': email, 'password': bcrypt.hashpw(password, bcrypt.gensalt())})
+			self.set_secure_cookie("user", user_id.binary)
 			self.redirect("/dashboard")
 		else:
 			self.render("register.html", errors=errors)
 	
 class LoginHandler(BaseHandler):
 	def get(self):
-		self.render("login.html")
+		if self.current_user:
+			self.redirect("/dashboard")
+		else:
+			self.render("login.html")
 		
 	def post(self):
 		email = self.get_argument("email", None)
 		password = self.get_argument("password", None)
-		user = self.db.users.find_one({'email': email}, {'password': 1})
-		if user and bcrypt.hashpw(password, user['password']) == user['password']:
-			print 'logged in!'
-		else:
-			print 'failure'
-		self.redirect("/login")
+		errors = []
+		if not email:
+			errors.append('Email is required')
+		if not password:
+			errors.append('Password is required')
+		if email and password:
+			user = self.db.users.find_one({'email': email}, {'password': 1})
+			if user and bcrypt.hashpw(password, user['password']) == user['password']:
+				self.set_secure_cookie("user", user['_id'].binary)
+				self.redirect("/dashboard")
+				return
+			else:
+				errors.append('Invalid email/password')
+		self.render("login.html", errors=errors)
+			
+class LogoutHandler(BaseHandler):
+	def get(self):
+		self.clear_cookie("user")
+		self.redirect("/")
 		
+class DashboardHandler(BaseHandler):
+	@tornado.web.authenticated
+	def get(self):
+		self.render("dashboard.html")
 
 if __name__ == "__main__":
 	tornado.options.parse_command_line()

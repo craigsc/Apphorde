@@ -11,6 +11,15 @@
 {% block content %}
 <div class="col-width">
 	<h2 class="subtitle">Log in</h2>
+	{% if 'errors' in globals() %}
+	<div id="errors">
+		<ul>
+			{% for error in errors %}
+			<li>{{ error }}</li>
+			{% end %}
+		</ul>
+	</div>
+	{% end %}
 	<div id="registration">
 		<form method="post" action="login">
 			<label class="required" for="email">Email:</label>
@@ -19,6 +28,7 @@
 				<label class="required" for="password">Password:</label>
 				<input type="password" name="password" id="password" class="fancy_input"/>
 			</div>
+			{{ xsrf_form_html() }}
 			<input id="submit" type="submit" value="Login"/>
 		</div>
 	</form>
