@@ -21,6 +21,7 @@ class Application(tornado.web.Application):
 			(r"/login", LoginHandler),
 			(r"/logout", LogoutHandler),
 			(r"/dashboard", DashboardHandler),
+			(r"/newapp", NewAppHandler),
 		]
 		settings = {
 			"static_path": os.path.join(os.path.dirname(__file__), "static"),
@@ -122,7 +123,15 @@ class LogoutHandler(BaseHandler):
 class DashboardHandler(BaseHandler):
 	@tornado.web.authenticated
 	def get(self):
-		self.render("dashboard.html")
+		if not self.current_user['apps']:
+			self.render("dashboard.html", notification="notification test")
+		else:
+			apps = self.db.apps.find({'_id': {'$in': self.current_user['apps']}}, {'name': 1, 'credits': 1, 'impressions': 1, 'clicks': 1})
+			self.render("dashboard.html", apps=apps)
+			
+class NewAppHandler(BaseHandler):
+	def get(self):
+		self.render("newapp.html")
 
 if __name__ == "__main__":
 	tornado.options.parse_command_line()

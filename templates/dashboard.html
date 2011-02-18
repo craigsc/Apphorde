@@ -1,7 +1,48 @@
-{% extends "base.html" %}
+{% extends "subpage.html" %}
 
 {% block nav %}
-<li class="current-page"><a href="/dashboard">Dashboard</a></li>
+<li class="current-page"><a href="dashboard">Dashboard</a></li>
 <li><a href="dev">Dev Resources</a></li>
+<li><a href="myaccount">My Account</a></li>
 <li><a href="logout">Log Out</a></li>
+{% end %}
+
+{% block subtitle %}Dashboard{% end %}
+
+{% block main %}
+<div class="button-container">
+	<a class="button" href="newapp" onclick="this.blur();"><span><img src={{ static_url("images/icon_add.gif") }} />Add new app</span></a>
+</div>
+<div id="stats">
+	<table>
+		<tr class="header">
+			<th>App</th>
+			<th>Impressions</th>
+			<th>Clicks</th>
+			<th>CTR</th>
+		</tr>
+		{% if not 'apps' in globals() %}
+		<tr class="row-even">
+			<td colspan=4 style="text-align: center;"><i>You have not yet added an app</i></td>
+		</tr>
+		{% else %}
+			{% for i in range(apps.count()) %}
+				{% if i%2 == 0 %}
+		<tr class="row-even">
+				{% else %}
+		<tr class="row-odd">
+				{% end %}
+			<td>{{ escape(apps[i]['name']) }}</td>
+			<td>{{ int(apps[i]['impressions']) }}</td>
+			<td>{{ int(apps[i]['clicks']) }}</td>
+				{% if apps[i]['impressions'] == 0 %}
+			<td>N/A</td>
+				{% else %}
+			<td>{{ apps[i]['clicks']/apps[i]['impressions'] + ' %' }}</td>
+				{% end %}
+		</tr>
+			{% end %}
+		{% end %}
+	</table>
+</div>
 {% end %}

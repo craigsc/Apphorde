@@ -150,7 +150,7 @@ body {
 
 #footer {
 	border-top: 1px solid #999;
-	padding: 5px;
+	padding: 5px 0;
 	margin-top: 15px;
 	font-size: 11px;
 }
@@ -226,4 +226,85 @@ a {
 	color: red;
 	border: 1px solid #000;
 	background: #FFFFCC;
+}
+
+/* Dashboard */
+.clear {
+    overflow: hidden;
+    width: 100%;
+}
+
+.button-container {
+	overflow: hidden;
+	margin: 15px 0;
+}
+
+a.button {
+    background: transparent url('../images/bg_button_a.gif') no-repeat scroll top right;
+    color: #444;
+    display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+    height: 24px;
+    margin-right: 6px;
+    padding-right: 18px; /* sliding doors padding */
+    text-decoration: none;
+	font-weight: bold;
+}
+
+a.button span {
+    background: transparent url('../images/bg_button_span.gif') no-repeat;
+    display: block;
+    line-height: 14px;
+    padding: 5px 0 5px 18px;
+}
+
+a.button span img {
+	vertical-align: bottom;
+	margin-right: 5px;
+}
+
+a.button:active {
+    background-position: bottom right;
+    color: #000;
+    outline: none; /* hide dotted outline in Firefox */
+}
+
+a.button:active span {
+    background-position: bottom left;
+    padding: 6px 0 4px 18px; /* push text down 1px */
+}
+
+#stats {
+	padding-bottom: 20px;
+}
+
+#stats table {
+	width: 100%;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+#stats table th {
+	color: #777;
+	text-align: left;
+	font-weight: normal;
+	padding: 0 10px;
+}
+
+#stats table tr {
+	border: 1px solid #BBB;
+}
+
+#stats table tr.header {
+	border: 0;
+}
+
+#stats table td {
+	font-size: 14px;
+	padding: 15px 10px;
+}
+
+.row-even {
+	background: #f0f6ff;
 }
