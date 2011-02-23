@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
+{% block head %}
+<link rel="stylesheet" type="text/css" href={{ static_url("css/teaser.css") }}/>
+<script type="text/javascript" src={{ static_url("js/jquery-1.5.min.js") }}></script>
+<script type="text/javascript" src={{ static_url("js/jquery.placeholder.min.js") }}></script>
+<script type="text/javascript" src={{ static_url("js/landing.js") }}></script>
+{% end %}
+
 {% block nav %}
 <li class="current-page"><a href="/">Home</a></li>
 <li><a href="how">How It Works</a></li>
@@ -14,7 +21,23 @@
 		<div id="upper-left" class="col-left">
 			<h2 class="headline">The easiest way to market your app</h2>
 			<p>Join today and advertise your app across our entire network for free! AppHorde is not your traditional ad network and we will never charge you advertising fees. Instead, we rely on all of our partners to give back by agreeing to display advertisements on their own app. The more ads displayed by your app, the more your app is advertised across our network. So what are you waiting for? Join the Horde!</p>
-			<a class="signup_button" href="#">Get Started</a>
+			<!--<a class="signup_button" href="#">Get Started</a>-->
+			<div id="signup" align="center">
+				<i>Sign up for our private beta</i>
+				{% if error %}
+				<div style="color:red;">
+					Please supply a valid email to sign up.
+				</div>
+				{% end %}
+				<form method="post" action="/thanks" id="beta_signup">
+					<input class="fancy_input" type="text" id="email" name="email" placeholder="Email"/>
+					{% if ref %}
+					<input type="hidden" name="ref" value={{ escape(ref) }} />
+					{% end %}
+					{{ xsrf_form_html() }}
+					<a id="signup_submit" class="go_button">Go</a>
+				</form>
+			</div>
 			<div id="android_only">
 				Currently limited to Android
 			</div>

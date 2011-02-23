@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href={{ static_url("css/teaser.css") }}/>
+		<script type="text/javascript" src={{ static_url("js/jquery-1.5.min.js") }}></script>
+		<script type="text/javascript" src={{ static_url("js/jquery.placeholder.min.js") }}></script>
+		<script type="text/javascript" src={{ static_url("js/landing.js") }}></script>
+		<title>AppHorde | Coming Soon</title>
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-19925373-4']);
+		  _gaq.push(['_trackPageview']);
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	</head>
+	<body class="grey_background">
+		<div id="main">
+			<div align="center">
+				<img src={{ static_url("images/apphorde-huge.png") }}/>
+			</div>
+			<div id="tagline">
+				Marketing your apps has never been easier.
+			</div>
+			<div id="signup" align="center">
+				Thanks! We'll let you know when we're ready.<br/>
+				Refer <b>three friends</b> to get bumped to the top of the invite list.
+				<div id="referrels" class="clearfix">
+					<p>Share via facebook and twitter</p>
+					<a id="test" name="fb_share" type="button_count" share_url="http://apphorde.com/?ref={{ escape(ref) }}" href="http://www.facebook.com/sharer.php">Share</a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+					<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://apphorde.com/?ref={{ escape(ref) }}" data-text="I just signed up for the @apphorde beta, come join me!" data-count="none">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+					<p>or direct link</p> 
+					<input id="ref_link" class="fancy_input" type="text" value="http://apphorde.com/?ref={{ escape(ref) }}" />
+				</div>
+			</div>	
+		</div>
+	</body>
+</html>
