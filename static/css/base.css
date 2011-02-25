@@ -85,15 +85,14 @@ body {
 }
 
 #upper-right {
-	padding-top: 20px;
+	padding-top: 40px;
 	width: 600px;
 	height: 350px;
-	background: url(../images/droid2.png)  no-repeat center center;
+	text-align: center;
 }
 
 #upper-right img {
-	margin: 46px 79px;
-	display: none;
+	
 }
 
 .signup_button {

@@ -19,11 +19,11 @@ class Application(tornado.web.Application):
 	def __init__(self):
 		handlers = [
 			(r"/", HomeHandler),
-			(r"/register", RegisterHandler),
+			#(r"/register", RegisterHandler),
 			(r"/login", LoginHandler),
 			(r"/logout", LogoutHandler),
 			(r"/dashboard", DashboardHandler),
-			(r"/newapp", NewAppHandler),
+			#(r"/newapp", NewAppHandler),
 			(r"/thanks", BetaHandler)
 		]
 		settings = {
