@@ -1,0 +1,51 @@
+{% extends "subpage.html" %}
+
+{% block nav %}
+<li><a href="dashboard">Dashboard</a></li>
+<li class="current-page"><a href="dev">Dev Resources</a></li>
+<li><a href="myaccount">My Account</a></li>
+<li><a href="logout">Log Out</a></li>
+{% end %}
+
+{% block subtitle %}Dev Resources{% end %}
+
+{% block main %}
+<div class="flfix">
+	<div class="col-left">
+		
+	</div>
+	<div class="col-right">
+		<div id="quickstart">
+			<h2>Quickstart Guide</h2>
+			<ol>
+				<li><b>Register</b> your app with AppHorde via the <a href="dashboard">Dashboard</a></li>
+				<li><b>Download</b> the <a href="sdk/android_sdk.zip">AppHorde Android SDK</a></li>
+				<li>Unzip and add <b>apphorde_sdk_xxx.jar</b> to your project's build path - <a href="http://developer.android.com/resources/faq/commontasks.html#addexternallibrary">How To</a></li>
+				<li>Add the <b>internet permission</b> to your app's AndroidManifest.xml (this is to download ads):
+					<div class="code">
+						<code>
+							&lt;uses-permission android:name="android.permission.INTERNET"/&gt;</p>
+						</code>
+					</div>
+				</li>
+				<li>Add the <b>AppHordeAd</b> view to the layout you wish to display it in:
+					<div class="code">
+						<code>
+							public class AppHordeDemo extends Activity { <br/><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public void onCreate(Bundle savedInstanceState) {<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super.onCreate(savedInstanceState);<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setContentView(R.layout.main);<br/>
+								<span style="color:green;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RelativeLayout layout = (RelativeLayout) findViewById(R.id.parent);<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AppHordeAd ad = new AppHordeAd(this, "Your App's AppHorde ID");<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;layout.addView(ad);</span><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+							}
+						</code>
+					</div>
+				</li>
+				<li>Ensure AppHorde is working properly then <b>publish</b> your app!</li>
+			</ol>
+		</div>
+	</div>
+</div>
+{% end %}

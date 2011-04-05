@@ -1,0 +1,50 @@
+{% extends "subpage.html" %}
+
+{% block nav %}
+<li><a href="dashboard">Dashboard</a></li>
+<li><a href="dev">Dev Resources</a></li>
+<li><a href="myaccount">My Account</a></li>
+<li><a href="logout">Log Out</a></li>
+{% end %}
+
+{% block subtitle %}Register a new app{% end %}
+
+{% block main %}
+<div id="form-container">
+	<form method="post" enctype="multipart/form-data" action="{% block post_target %}registerapp{% end %}">
+		<label class="required" for="name">App Name:</label>
+		<input type="text" name="name" id="name" class="fancy_input"
+		{% if 'name' in globals() %}
+			value="{{ escape(name) }}"
+		{% end %}
+		/>
+		<br/><br/>
+		<label class="required" for="package">Package Name:</label>
+		<input type="text" name="package" id="package" class="fancy_input"
+		{% if 'package' in globals() %}
+			value="{{ escape(package) }}"
+		{% end %}
+		/>
+		<p class="detail">The app's fully qualified package name</p>
+		<label class="required" for="icon">App Icon:</label>
+		{% if 'image' in globals() %}
+			<img style="margin-left:10px;" src="{{ image }}" height="48" width="48"/>
+		{% end %}
+		<input type="file" style="border:none;" name="icon" id="icon" class="fancy_input"/>
+		<p class="detail">Must be a 48x48 PNG</p>
+		<span class="textarea-container">
+			<label class="required" for="description">Ad Text:</label>
+			<textarea rows="3" name="description" id="description" class="fancy_input">
+			{% if 'adtext' in globals() %}
+				{{ escape(adtext) }}
+			{% end %}
+			</textarea>
+			<p class="detail">Max of 160 characters</p>
+		</span>
+		{{ xsrf_form_html() }}
+		{% block buttons %}
+			<input id="submit" type="submit" value="Submit"/>
+		{% end %}
+	</form>
+</div>
+{% end %}

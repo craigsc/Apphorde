@@ -10,25 +10,27 @@
 
 {% block content %}
 <div class="col-width">
-	<h2 class="subtitle">{% block subtitle %}{% end %}</h2>
-	{% if 'notifications' in globals() %}
-	<div id="notification">
-		<ul>
-			{% for notification in notifications %}
-			<li>{{ notification }}</li>
-			{% end %}
-		</ul>
+	<div class="spacing">
+		<h2 class="subtitle">{% block subtitle %}{% end %}</h2>
+		{% if 'notifications' in globals() %}
+		<div id="notification">
+			<ul>
+				{% for notification in notifications %}
+				<li>{{ notification }}</li>
+				{% end %}
+			</ul>
+		</div>
+		{% end %}
+		{% if 'errors' in globals() %}
+		<div id="errors">
+			<ul>
+				{% for error in errors %}
+				<li>{{ error }}</li>
+				{% end %}
+			</ul>
+		</div>
+		{% end %}
+		{% block main %}{% end %}
 	</div>
-	{% end %}
-	{% if 'errors' in globals() %}
-	<div id="errors">
-		<ul>
-			{% for error in errors %}
-			<li>{{ error }}</li>
-			{% end %}
-		</ul>
-	</div>
-	{% end %}
-	{% block main %}{% end %}
 </div>
 {% end %}

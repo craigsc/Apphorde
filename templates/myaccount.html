@@ -1,0 +1,26 @@
+{% extends "subpage.html" %}
+
+{% block nav %}
+<li><a href="dashboard">Dashboard</a></li>
+<li><a href="dev">Dev Resources</a></li>
+<li class="current-page"><a href="myaccount">My Account</a></li>
+<li><a href="logout">Log Out</a></li>
+{% end %}
+
+{% block subtitle %}My Account{% end %}
+
+{% block main %}
+<div id="form-container">
+	<form method="post" action="myaccount">
+		<label class="required" for="oldpassword">Old Password:</label>
+		<input type="password" name="oldpassword" id="oldpassword" class="fancy_input"/>
+		<p class="detail">Required for security reasons</p>
+		<label class="required" for="password">New Password:</label>
+		<input type="password" name="password" id="password" class="fancy_input"/>
+		<p class="detail">Minimum of 6 characters</p>
+		<label class="required" for="confirm_password">Confirm New Password:</label>
+		<input type="password" name="confirm_password" id="confirm_password" class="fancy_input"/>
+		<input id="submit" type="submit" value="Submit"/>
+	</form>
+</div>
+{% end %}

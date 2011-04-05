@@ -11,7 +11,9 @@
 
 {% block main %}
 <div class="button-container">
-	<a class="button" href="newapp" onclick="this.blur();"><span><img src={{ static_url("images/icon_add.gif") }} />Add new app</span></a>
+	<a class="button" href="registerapp" onclick="this.blur();">
+		<span><img src={{ static_url("images/icon_add.gif") }} />Add new app</span>
+	</a>
 </div>
 <div id="stats">
 	<table>
@@ -32,13 +34,26 @@
 				{% else %}
 		<tr class="row-odd">
 				{% end %}
-			<td>{{ escape(apps[i]['name']) }}</td>
+			<td>
+				<div class="app-icon">
+					<img src="{{ escape(apps[i]['icon_path'])}}" width="48" height="48"/>
+				</div>
+				<div class="app-desc">
+					<div id="name">
+						<a href="/editapp?id={{ escape(apps[i]['appId']) }}">
+							{{ escape(apps[i]['name']) }}
+						</a>
+					</div>
+					<div class="additional">ID: {{ escape(apps[i]['appId']) }}</div>
+					<div class="additional">Package: {{ escape(apps[i]['package']) }}</div>
+				</div>
+			</td>
 			<td>{{ int(apps[i]['impressions']) }}</td>
 			<td>{{ int(apps[i]['clicks']) }}</td>
 				{% if apps[i]['impressions'] == 0 %}
 			<td>N/A</td>
 				{% else %}
-			<td>{{ apps[i]['clicks']/apps[i]['impressions'] + ' %' }}</td>
+			<td>{{ "%.3f" % (100*float(apps[i]['clicks'])/apps[i]['impressions']) }}%</td>
 				{% end %}
 		</tr>
 			{% end %}

@@ -19,12 +19,17 @@ class Application(tornado.web.Application):
 	def __init__(self):
 		handlers = [
 			(r"/", HomeHandler),
-			#(r"/register", RegisterHandler),
+			(r"/register", RegisterHandler),
 			(r"/login", LoginHandler),
 			(r"/logout", LogoutHandler),
 			(r"/dashboard", DashboardHandler),
-			#(r"/newapp", NewAppHandler),
-			(r"/thanks", BetaHandler)
+			(r"/registerapp", RegisterAppHandler),
+			(r"/thanks", BetaHandler),
+			(r"/getad", GetAdHandler),
+			(r"/click", ClickHandler),
+			(r"/dev", DevHandler),
+			(r"/editapp", EditAppHandler),
+			(r"/myaccount", MyAccountHandler),
 		]
 		settings = {
 			"static_path": os.path.join(os.path.dirname(__file__), "static"),
@@ -94,8 +99,8 @@ class RegisterHandler(BaseHandler):
 		else: errors.append("Email is required.")
 		
 		if password:
-			if len(password) < 6 or len(password) > 32:
-				errors.append("Password must be 6-32 characters in length.")
+			if len(password) < 6:
+				errors.append("Password must have a minimum of 6 characters.")
 			else: 
 				if confirm_password and password != confirm_password:
 					errors.append("Password and password confirmation must match.")
@@ -108,8 +113,8 @@ class RegisterHandler(BaseHandler):
 		
 		if len(errors) == 0:
 			#insert new user entry
-			user_id = self.db.users.insert({'email': email, 'password': bcrypt.hashpw(password, bcrypt.gensalt())})
-			self.set_secure_cookie("user", user_id.binary)
+			user_id = self.db.users.insert({'email': email, 'password': bcrypt.hashpw(password, bcrypt.gensalt()), 'apps': []})
+			self.set_secure_cookie("user", user_id.binary, expires_days=1)
 			self.redirect("/dashboard")
 		else:
 			self.render("register.html", errors=errors)
@@ -132,8 +137,8 @@ class LoginHandler(BaseHandler):
 		if email and password:
 			user = self.db.users.find_one({'email': email}, {'password': 1})
 			if user and bcrypt.hashpw(password, user['password']) == user['password']:
-				self.set_secure_cookie("user", user['_id'].binary)
-				self.redirect("/dashboard")
+				self.set_secure_cookie("user", user['_id'].binary, expires_days=1)
+				self.redirect('/dashboard')
 				return
 			else:
 				errors.append('Invalid email/password')
@@ -150,13 +155,212 @@ class DashboardHandler(BaseHandler):
 		if not self.current_user['apps']:
 			self.render("dashboard.html", notification="notification test")
 		else:
-			apps = self.db.apps.find({'_id': {'$in': self.current_user['apps']}}, {'name': 1, 'credits': 1, 'impressions': 1, 'clicks': 1})
+			apps = self.db.apps.find({'_id': {'$in': self.current_user['apps']}})
 			self.render("dashboard.html", apps=apps)
 			
-class NewAppHandler(BaseHandler):
+class RegisterAppHandler(BaseHandler):
 	@tornado.web.authenticated
 	def get(self):
-		self.render("newapp.html")
+		self.render("registerapp.html")			
+	
+	@tornado.web.authenticated
+	def post(self):
+		name = self.get_argument("name", None)
+		package = self.get_argument("package", None)	
+		description = self.get_argument("description", None)
+		icon_name = self.get_argument("icon_name", None)
+
+		#validate app info
+		errors = []
+		if not name: 
+			errors.append("App name is required")
+		if not package: 
+			errors.append("Package name is required")
+		if description:
+			if len(description) > 160: errors.append("Max ad text length is 160 characters")
+		else:
+			errors.append("Ad text is required")
+
+		#validate uploaded icon
+		if not icon_name: 
+			errors.append("App icon is required")
+		elif 'image/png' != self.get_argument("icon_content_type", None): 
+			errors.append("App icon must be a PNG")
+
+		if len(errors) == 0:
+			from os import mkdir
+			from shutil import move
+			#generate dir name and create if necessary
+			dest_dir = "static/icons/%s" % self.get_argument('icon_md5', '')[:6]
+			if not os.path.exists(dest_dir):
+				mkdir(dest_dir)
+			
+			#generate filename and move into place
+			garbler = ''.join(random.choice(string.ascii_lowercase + string.digits) for x in range(10))
+			icon_name = '%s-%s.png' % (garbler, package)
+			path = '%s/%s' % (dest_dir, icon_name)
+			move(self.get_argument('icon_path'), path)
+			
+			#insert new app entry
+			appId = None
+			while not appId or self.db.apps.find({'appId': appId}, {'appId': 1}).count() != 0:
+				appId = ''.join(random.choice(string.ascii_lowercase + string.digits) for x in range(20))
+			app_id = self.db.apps.insert({
+				'appId': appId,
+				'name': name, 
+				'package': package,
+				'icon_path': path,
+				'desc': description,
+				'random': random.random(), 
+				'credits': 100, 
+				'impressions': 0,
+				'clicks': 0})
+			self.db.users.update({'_id': self.current_user['_id']}, {'$push': {'apps': app_id}})
+			self.redirect("/dashboard")
+		else:
+			self.render("registerapp.html", errors=errors)
+
+class GetAdHandler(BaseHandler):
+	def get(self):
+		appId = self.get_argument('appid', None)
+		if not appId:
+			self.write('error')
+			return
+		
+		#Get the ad to display and update the credits
+		# rand = random.random()
+		# 		print rand
+		# 		app = self.db.apps.find_and_modify(
+		# 			query={
+		# 				'appId': {'$ne': appId},
+		# 				'credits': {'$gte': 1},
+		# 				'random': {'$gte': rand}
+		# 			},
+		# 			update={
+		# 				'$inc': {'credits': -1, 'impressions': 1}
+		# 			},
+		# 			fields={
+		# 				'icon_path': 1,
+		# 				'desc': 1,
+		# 				'package': 1,
+		# 				'appId': 1
+		# 			})
+		# 		if not app:
+		# 			app = self.db.apps.find_and_modify(
+		# 				query={
+		# 					'appId': {'$ne': appId},
+		# 					'credits': {'$gte': 1},
+		# 					'random': {'$lte': rand}
+		# 				},
+		# 				update={
+		# 					"$inc": {"credits": -1, "impressions": 1}
+		# 				},
+		# 				fields={
+		# 					'icon_path': 1,
+		# 					'desc': 1,
+		# 					'package': 1,
+		# 				})
+		
+		inventory = self.db.apps.find({'appId': {'$ne': appId}, 'credits': {'$gte': 1}})
+		count = inventory.count()
+		if count == 0:
+			#No inventory! Make some money
+			return
+		else:
+			app = inventory.limit(-1).skip(int(random.random() * count)).next()
+			self.db.apps.update({'_id': app['_id']}, {'$inc': {'impressions': 1, 'credits': -1}})
+			self.write("OK\n%s\n%s\n%s\n%s" % (
+				"http://apphorde.com/%s" % app['icon_path'], 
+				app['appId'], 
+				"market://details?id=%s" % app['package'], 
+				app['desc']))
+		
+		#Give app credit it deserves
+		self.db.apps.update({'appId': appId}, {'$inc': {'credits': 1}})
+		
+class ClickHandler(BaseHandler):
+	def get(self):
+		appId = self.get_argument('appid', None)
+		if appId:
+			self.db.apps.update({'appId': appId}, {'$inc': {'clicks': 1}})
+			
+class DevHandler(BaseHandler):
+	def get(self):
+		self.render("dev.html")
+		
+class EditAppHandler(BaseHandler):
+	def get(self):
+		appId = self.get_argument('id', None)
+		if not appId:
+			self.redirect("/dashboard")
+		else:
+			app = self.db.apps.find_one({'appId': appId})
+			self.render("editapp.html", appId=app['appId'], name=app['name'], package=app['package'], adtext=app['desc'], image=app['icon_path'])
+	def post(self):
+		name = self.get_argument("name", None)
+		package = self.get_argument("package", None)	
+		description = self.get_argument("description", None)
+		icon_name = self.get_argument("icon_name", None)
+		appId = self.get_argument("appid", None)
+
+		if not appId:
+			self.redirect("/dashboard")
+			return
+			
+		#validate new app info
+		errors = []
+		if not name: 
+			errors.append("App name is required")
+		if not package: 
+			errors.append("Package name is required")
+		if description:
+			if len(description) > 160: errors.append("Max ad text length is 160 characters")
+		else:
+			errors.append("Ad text is required")
+
+		#validate uploaded icon
+		if icon_name and 'image/png' != self.get_argument("icon_content_type", None): 
+			errors.append("App icon must be a PNG")
+
+		if len(errors) == 0:
+			icon_path = None
+			if icon_name:
+				from os import mkdir
+				from shutil import move
+				#generate dir name and create if necessary
+				dest_dir = "static/icons/%s" % self.get_argument('icon_md5', '')[:6]
+				if not os.path.exists(dest_dir):
+					mkdir(dest_dir)
+			
+				#generate filename and move into place
+				garbler = ''.join(random.choice(string.ascii_lowercase + string.digits) for x in range(10))
+				icon_name = '%s-%s.png' % (garbler, package)
+				path = '%s/%s' % (dest_dir, icon_name)
+				move(self.get_argument('icon_path'), path)
+			
+				#Update app entry
+				self.db.apps.update({'appId': appId}, {
+					'$set': {
+						'name': name,
+						'package': package,
+						'icon_path': path,
+						'desc': description}})
+			else:
+				#Update app entry
+				self.db.apps.update({'appId': appId}, {
+					'$set': {
+						'name': name,
+						'package': package,
+						'desc': description}})
+			self.redirect("/dashboard")
+		else:
+			icon_path = self.db.apps.find_one({'appId': appId}, {'icon_path': 1})['icon_path']
+			self.render("editapp.html", errors=errors, appId=appId, name=name, 
+				package=package, adtext=description, image=icon_path)
+
+class MyAccountHandler(BaseHandler):
+	def get(self):
+		self.render("myaccount.html")
 
 if __name__ == "__main__":
 	tornado.options.parse_command_line()
