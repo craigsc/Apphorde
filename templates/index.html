@@ -19,10 +19,10 @@
 <div id="upper" class="grey">
 	<div class="col-width flfix">
 		<div id="upper-left" class="col-left">
-			<h2 class="headline">The easiest way to market your app</h2>
-			<p>Join today and advertise your app across our entire network for free! AppHorde is not your traditional ad network and we will never charge you advertising fees. Instead, we rely on all of our partners to give back by agreeing to display advertisements on their own app. The more ads displayed by your app, the more your app is advertised across our network. So what are you waiting for? Join the Horde!</p>
+			<h2 class="headline">The <i><u>best</u></i> way to market your app</h2>
+			<p class="why_join"><!--Join today and advertise your apps across our entire network for free! AppHorde is not your traditional ad network and we will never charge you advertising fees. Instead, we rely on all of our partners to give back by agreeing to display advertisements on their own app. The more ads displayed by your app, the more your app is advertised across our network. Marketing mobile apps is now a problem of the past thanks to AppHorde. We enable you to advertise your apps to thousands of potential users completely for free. Our system enables developers to advertise on eachother's apps in an easy and fair way. Marketing has never been this easy!-->Advertise your mobile apps across the AppHorde network. You display ads for other apps and, in exchange, more of your own ads are displayed. Get exposure. Increase installs. Make your app successful. All for free.</p>
 			<!--<a class="signup_button" href="#">Get Started</a>-->
-			<div id="signup" align="center">
+			<div id="signup">
 				<i>Sign up for our private beta</i>
 				{% if error %}
 				<div style="color:red;">
@@ -43,7 +43,7 @@
 			</div>
 		</div>
 		<div id="upper-right" class="col-right">
-			<img src={{ static_url("images/horde.png") }}/>
+			<img src={{ static_url("images/apphorde-home.png") }}/>
 		</div>
 	</div>
 </div>
@@ -57,7 +57,10 @@
 				<img src={{ static_url("images/megaphone_48.png") }}/>
 			</div>
 			<div class="description">
-				Give your app the exposure it deserves by advertising across the AppHorde network. Just sit back and watch the downloads skyrocket.
+				<div class="desc-title">
+					Get Exposure
+				</div>
+				Advertise your app across the AppHorde network and watch your installs skyrocket.
 			</div>
 		</li>
 		<li>
@@ -65,7 +68,10 @@
 				<img src={{ static_url("images/check_48.png") }}/>
 			</div>
 			<div class="description">
-				Thanks to our super-simple library, integrating AppHorde into your app takes less than 10 minutes. Start earning ad placements in no time! 
+				<div class="desc-title">
+					Easy Setup
+				</div>
+				Integrate AppHorde into your app in less than 10 minutes. Start earning ad placements in no time!
 			</div>
 		</li>
 		<li>
@@ -73,7 +79,10 @@
 				<img src={{ static_url("images/money_48.png") }}/>
 			</div>
 			<div class="description">
-				Advertising your app on most ad networks could cost hundreds, or even thousands of dollars. AppHorde is always completely free.
+				<div class="desc-title">
+					100% Free
+				</div>
+				Other ad networks charge hundreds or even thousands of dollars. AppHorde is completely free!
 			</div>
 		</li>
 		<li>
@@ -81,7 +90,10 @@
 				<img src={{ static_url("images/graph_48.png") }}/>
 			</div>
 			<div class="description">
-				Access realtime statistics via the AppHorde Dashboard. You'll be able to see for yourself how well your ads are performing.
+				<div class="desc-title">
+					Real-time Statistics
+				</div>
+				Access statistics via the AppHorde Dashboard. You'll be able to see for yourself how well your ads are performing.
 			</div>
 		</li>
 	</ul>

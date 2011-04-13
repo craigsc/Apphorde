@@ -27,7 +27,7 @@ body {
 
 .headline {
 	color: #840303;
-	font-size: 30px;
+	font-size: 32px;
 	font-family: 'Droid Sans', serif;
 }
 
@@ -86,9 +86,9 @@ body {
 }
 
 #upper-right {
-	padding-top: 40px;
+	padding-top: 10px;
 	width: 600px;
-	height: 350px;
+	height: 400px;
 	text-align: center;
 }
 
@@ -109,14 +109,18 @@ body {
 	outline: 0;
 }
 
+.why_join {
+	font-size: 15px;
+	font-family: Georgia, serif;
+}
+
 #android_only {
 	font-weight: bold;
-	text-align: center;
 	color: #777;
 }
 
 #features {
-	padding: 20px 0;
+	padding-top: 20px;
 	color: #000;
 }
 
@@ -142,15 +146,48 @@ body {
 	padding-left: 60px;
 	font-size: 12px;
 	line-height: 20px;
+	color: #555;
+	font-family: Georgia, serif;
+}
+
+#features li .description .desc-title {
+	color: #000;
+	font-family: Georgia, serif;
+	font-size: 18px;
+	font-weight: 500;
 }
 
 #footer {
 	border-top: 1px solid #999;
-	padding: 5px 0;
 	margin: 0 5px;
-	margin-top: 15px;
+	margin-top: 40px;
+	margin-bottom: 15px;
+	display: block;
+	clear: both;
+}
+
+#copyright {
+	float: left;
+	margin-top: 5px;
 	font-size: 11px;
 }
+
+#footer-nav {
+	list-style-type: none;
+	float: right;
+}
+
+#footer-nav ul {
+	margin: 0;
+	padding: 0;
+}
+
+#footer-nav li {
+	display: inline;
+	margin-right: 20px;
+	font-size: 11px;
+}
+
 
 /* Register */
 
@@ -260,6 +297,7 @@ a.button span {
 a.button span img {
 	vertical-align: bottom;
 	margin-right: 5px;
+	border: 0;
 }
 
 a.button:active {
@@ -328,11 +366,7 @@ a.button:active span {
 	margin: 15px 15px;
 }
 
-#quickstart {
-	font-size: 13px;
-}
-
-#quickstart ol li {
+.devtopic ol li {
 	margin-bottom: 15px;
 }
 
@@ -350,4 +384,71 @@ a.button:active span {
 	width: 100px;
 	font-size: 18px;
 	line-height: 50px;
+}
+
+#notification {
+	color: green;
+}
+
+.sidebar {
+	list-style: none;
+	margin: 20px 0;
+	padding: 0;
+}
+
+.sidebar li {
+	background: #eee;
+	border: 1px solid #BBB;
+}
+
+.sidebar li:hover, .sidebar li.active {
+	background: #ccc;
+}
+
+.sidebar li a {
+	color: #555;
+	font-weight: bold;
+	font-size: 13px;
+	display: block;
+	padding: 15px 10px;
+}
+
+.devtopic > div {
+	padding-bottom: 15px;
+	display: none;
+}
+
+.devtopic div.first {
+	display: block;
+}
+
+#download .icon {
+	width: 115px;
+}
+
+#download .text {
+	width: 550px;
+	margin: 25px 0;
+}
+
+#download .download-link {
+	font-size: 18px;
+	margin: 25px 0;
+}
+
+#download .sdk-details {
+	color: #999;
+}
+
+.contact_info {
+	list-style: none;
+	font-size: 14px;
+}
+
+.contact_info .icon {
+	margin: 0 10px;
+}
+
+.contact {
+	margin: 15px 0;
 }

@@ -1,5 +1,10 @@
 {% extends "subpage.html" %}
 
+{% block head %}
+<script type="text/javascript" src={{ static_url("js/jquery-1.5.min.js") }}></script>
+<script type="text/javascript" src={{ static_url("js/devresources.js") }}></script>
+{% end %}
+
 {% block nav %}
 <li><a href="dashboard">Dashboard</a></li>
 <li class="current-page"><a href="dev">Dev Resources</a></li>
@@ -12,14 +17,20 @@
 {% block main %}
 <div class="flfix">
 	<div class="col-left">
-		
+		<ul class="sidebar">
+			<li class="active"><a href="#">Quickstart Guide</a></li>
+			<li><a href="#">Download SDK</a></li>
+			<li><a href="#">Recommended Layout Setup</a></li>
+			<li><a href="#">Adding to Preference Screens</a></li>
+			<li><a href="#">Help</a></li>
+		</ul>
 	</div>
-	<div class="col-right">
-		<div id="quickstart">
-			<h2>Quickstart Guide</h2>
+	<div class="col-right devtopic" style="font-size: 13px; width: 700px">
+		<div id="quickstart" class="first">
+			<h2 class="subtitle">Quickstart Guide</h2>
 			<ol>
 				<li><b>Register</b> your app with AppHorde via the <a href="dashboard">Dashboard</a></li>
-				<li><b>Download</b> the <a href="sdk/android_sdk.zip">AppHorde Android SDK</a></li>
+				<li><b>Download</b> the <a href="resources/android_sdk.zip">AppHorde Android SDK</a></li>
 				<li>Unzip and add <b>apphorde_sdk_xxx.jar</b> to your project's build path - <a href="http://developer.android.com/resources/faq/commontasks.html#addexternallibrary">How To</a></li>
 				<li>Add the <b>internet permission</b> to your app's AndroidManifest.xml (this is to download ads):
 					<div class="code">
@@ -31,20 +42,119 @@
 				<li>Add the <b>AppHordeAd</b> view to the layout you wish to display it in:
 					<div class="code">
 						<code>
-							public class AppHordeDemo extends Activity { <br/><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public void onCreate(Bundle savedInstanceState) {<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super.onCreate(savedInstanceState);<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setContentView(R.layout.main);<br/>
-								<span style="color:green;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RelativeLayout layout = (RelativeLayout) findViewById(R.id.parent);<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AppHordeAd ad = new AppHordeAd(this, "Your App's AppHorde ID");<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;layout.addView(ad);</span><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+							public class AppHordeDemo extends Activity { <br /><br />
+								&nbsp;&nbsp;&nbsp;&nbsp;public void onCreate(Bundle savedInstanceState) {<br />
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super.onCreate(savedInstanceState);<br />
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setContentView(R.layout.main);<br />
+								<span style="color:green;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RelativeLayout layout = (RelativeLayout) findViewById(R.id.parent);<br />
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AppHordeAd ad = new AppHordeAd(this, "Your App's AppHorde ID");<br />
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;layout.addView(ad);</span><br />
+								&nbsp;&nbsp;&nbsp;&nbsp;}<br />
 							}
 						</code>
 					</div>
 				</li>
 				<li>Ensure AppHorde is working properly then <b>publish</b> your app!</li>
 			</ol>
+		</div>
+		<div id="download">
+			<h2 class="subtitle">Download SDK</h2>
+			<div class="flfix">
+				<div class="col-left icon">
+					<img src="{{ static_url("images/android_lab.png") }}"/>
+				</div>
+				<div class="col-right text">
+					<div class="download-link">
+						<a href="resources/android_sdk.zip">Download the AppHorde Android SDK</a>
+					</div>
+					<div class="sdk-details">
+						Current Version: v0.7<br />
+						Last Updated: April 12, 2011<br />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="layout">
+			<h2 class="subtitle">Recommended Layout Setup</h2>
+			If your app uses a <b>RelativeLayout</b> as its parent layout then integrating AppHorde requires <b>no changes</b>.<br /><br />
+			However, if you use a LinearLayout, TableLayout, etc. then we recommend <b>wrapping this layout in a new parent RelativeLayout</b> to ensure AppHorde compatibility. Alternatively, you can manually set the position of the AppHorde ad in the existing layout, but this requires more work.<br /><br />
+			For example, if we have the following UI code:
+			<div class="code">
+				<code>
+				&lt;?xml version="1.0" encoding="utf-8"?&gt;</br>
+				&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"<br />
+				    &nbsp;&nbsp;&nbsp;&nbsp;android:layout_width="fill_parent"<br />
+				    &nbsp;&nbsp;&nbsp;&nbsp;android:layout_height="fill_parent"&gt;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />
+				&lt;/LinearLayout&gt;
+				</code>
+			</div>
+			Then we would modify it to be the following:
+			<div class="code">
+				<code>
+				&lt;?xml version="1.0" encoding="utf-8"?&gt;<br />
+				<span style="color:green;">&lt;RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"<br />
+			    	&nbsp;&nbsp;&nbsp;&nbsp;android:layout_width="fill_parent"<br />
+			    	&nbsp;&nbsp;&nbsp;&nbsp;android:layout_height="fill_parent"&gt;<br /></span>
+					&nbsp;&nbsp;&nbsp;&nbsp;&lt;LinearLayout <br />
+				    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;android:layout_width="fill_parent"<br />
+				    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;android:layout_height="fill_parent"&gt;<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&lt;/LinearLayout&gt;<br />
+				<span style="color:green;">&lt;/RelativeLayout&gt;</span>
+				</code>
+			</div>
+		</div>
+		<div id="preference">
+			<h2 class="subtitle">Adding to Preference Screens</h2>
+			<ol>
+				<li>Save <a href="resources/apphorde.xml">apphorde.xml</a> to res/layout/ within your project.</li>
+				<li>Modify the PreferenceActivity to contain the following:
+						<div class="code">
+							<code>
+								public class Preferences extends PreferenceActivity { <br /><br />
+									&nbsp;&nbsp;&nbsp;&nbsp;public void onCreate(Bundle savedInstanceState) {<br />
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super.onCreate(savedInstanceState);<br />
+									<span style="color:green;">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addPreferencesFromResource(<span style="color:blue;">R.xml.settings</span>);<br />
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setContentView(R.layout.apphorde);<br />
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RelativeLayout layout = (RelativeLayout) findViewById(R.id.apphorde);<br />
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AppHordeAd ad = new AppHordeAd(this, "Your App's AppHorde ID");<br />
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;layout.addView(ad);<br />
+									</span>
+									&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+								}
+							</code>
+						</div>
+						Where the blue text is replaced by your own preference screen xml definition.
+				</li>
+			</ol>
+		</div>
+		<div id="help">
+			<h2 class="subtitle">Help</h2>
+			Need some help? Feel free to contact us:
+			<ul class="contact_info">
+				<li>
+					<div class="flfix">
+						<div class="col-left icon"><img src="{{static_url("images/email-icon.png")}}"/></div>
+						<div class="contact"><a href="mailto:help@apphorde.com">help@apphorde.com</a></div>
+					</div>
+				</li>
+				<li>
+					<div class="flfix">
+						<div class="col-left icon"><img src="{{static_url("images/twitter-icon.png")}}"/></div>
+						<div class="contact"><a href="http://www.twitter.com/apphorde">@apphorde</a></div>
+					</div>
+				</li>
+				<li>
+							<script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script>
+							<a href="skype:apphorde?call"><img src="http://download.skype.com/share/skypebuttons/buttons/call_blue_white_124x52.png" style="border: none;" width="124" height="52" alt="Skype Me™!" /></a>
+				</li>
+			</ul>
 		</div>
 	</div>
 </div>

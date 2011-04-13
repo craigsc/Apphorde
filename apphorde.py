@@ -360,7 +360,36 @@ class EditAppHandler(BaseHandler):
 
 class MyAccountHandler(BaseHandler):
 	def get(self):
-		self.render("myaccount.html")
+		self.render("myaccount.html", email=self.current_user['email'])
+		
+	def post(self):
+		email = self.get_argument("email", None)
+		old_password = self.get_argument("oldpassword", None)
+		password = self.get_argument("password", None)
+		confirm_password = self.get_argument("confirm_password", None);
+		errors = []
+		if not email:
+			errors.append('Email cannot be blank')
+		elif not re.match(r"^[^\s@]+@[^\s@]+\.[^\s@]{2,}$", email):
+			errors.append("Email must be of the format 'something@something.xxx'.")
+		if not old_password:
+			if password or confirm_password:
+				errors.append("Current password must be supplied to change passwords.")
+		elif (password and not confirm_password) or (confirm_password and not password):
+			errors.append('New Password and Confirm New Password are required in order to change the current password.')
+		elif password and confirm_password and password != confirm_password:
+			errors.append('New password and new password confirmation must match.')
+		elif password and confirm_password and password == confirm_password:
+			if bcrypt.hashpw(old_password, self.current_user['password']) != self.current_user['password']:
+				errors.append('The old password supplied is not correct, no updates were made to the user.')
+		if len(errors) == 0:
+			user = self.current_user
+			self.db.users.update({'_id': user['_id']}, {'$set': {'email': email}})
+			if password:
+				self.db.users.update({'_id': user['_id']}, {'$set': {'password': bcrypt.hashpw(password, bcrypt.gensalt())}})
+			self.render("myaccount.html", email=email, notifications=["Account successfully updated"])
+		else:			
+			self.render("myaccount.html", errors=errors, email=email)
 
 if __name__ == "__main__":
 	tornado.options.parse_command_line()

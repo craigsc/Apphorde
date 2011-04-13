@@ -12,14 +12,18 @@
 {% block main %}
 <div id="form-container">
 	<form method="post" action="myaccount">
+		<label class="required" for="email">Email:</label>
+		<input type="text" name="email" id="email" class="fancy_input" value="{{ escape(email) }}"/>
+		<p class="detail"></p>
 		<label class="required" for="oldpassword">Old Password:</label>
 		<input type="password" name="oldpassword" id="oldpassword" class="fancy_input"/>
-		<p class="detail">Required for security reasons</p>
+		<p class="detail">Only required if changing password</p>
 		<label class="required" for="password">New Password:</label>
 		<input type="password" name="password" id="password" class="fancy_input"/>
 		<p class="detail">Minimum of 6 characters</p>
 		<label class="required" for="confirm_password">Confirm New Password:</label>
 		<input type="password" name="confirm_password" id="confirm_password" class="fancy_input"/>
+		{{ xsrf_form_html() }}
 		<input id="submit" type="submit" value="Submit"/>
 	</form>
 </div>
