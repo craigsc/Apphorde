@@ -1,0 +1,42 @@
+{% extends "subpage.html" %}
+
+{% block nav %}
+{% if loggedin %}
+<li><a href="dashboard">Dashboard</a></li>
+<li><a href="dev">Dev Resources</a></li>
+<li><a href="myaccount">My Account</a></li>
+<li><a href="logout">Log Out</a></li>
+{% else %}
+<li><a href="/">Home</a></li>
+<li><a href="register">Have an invite?</a></li>
+<li><a href="login">Log in</a></li>
+{% end %}
+{% end %}
+
+{% block subtitle %}Contact Us{% end %}
+
+{% block main %}
+Have a question? Concern? Comment? Just want to chat? Feel free to contact us at any time!
+<ul class="contact_info">
+	<li>
+		<div class="flfix">
+			<div class="col-left icon"><img src="{{static_url("images/email-icon.png")}}"/></div>
+			<div class="contact">
+				Craig Campbell, CEO - <a href="mailto:craig@apphorde.com">craig@apphorde.com</a><br />
+				Feedback - <a href="mailto:feedback@apphorde.com">feedback@apphorde.com</a><br />
+				Help - <a href="mailto:help@apphorde.com">help@apphorde.com</a>
+			</div>
+		</div>
+	</li>
+	<li>
+		<div class="flfix">
+			<div class="col-left icon"><img src="{{static_url("images/twitter-icon.png")}}"/></div>
+			<div class="contact"><a href="http://www.twitter.com/apphorde">@apphorde</a></div>
+		</div>
+	</li>
+	<li>
+				<script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script>
+				<a href="skype:apphorde?call"><img src="http://download.skype.com/share/skypebuttons/buttons/call_blue_white_124x52.png" style="border: none;" width="124" height="52" alt="Skype Me™!" /></a>
+	</li>
+</ul>
+{% end %}

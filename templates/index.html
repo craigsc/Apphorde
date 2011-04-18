@@ -8,11 +8,10 @@
 {% end %}
 
 {% block nav %}
-<li class="current-page"><a href="/">Home</a></li>
 <!--<li><a href="how">How It Works</a></li>
-<li><a href="dev">Dev Resources</a></li>
-<li><a href="register">Register</a></li>-->
-<li><a href="login">Log In</a></li>
+<li><a href="dev">Dev Resources</a></li>-->
+<li><a href="register">Have an invite?</a></li>
+<li><a href="login">Log in</a></li>
 {% end %}
 
 {% block header %}
@@ -20,10 +19,9 @@
 	<div class="col-width flfix">
 		<div id="upper-left" class="col-left">
 			<h2 class="headline">The <i><u>best</u></i> way to market your app</h2>
-			<p class="why_join"><!--Join today and advertise your apps across our entire network for free! AppHorde is not your traditional ad network and we will never charge you advertising fees. Instead, we rely on all of our partners to give back by agreeing to display advertisements on their own app. The more ads displayed by your app, the more your app is advertised across our network. Marketing mobile apps is now a problem of the past thanks to AppHorde. We enable you to advertise your apps to thousands of potential users completely for free. Our system enables developers to advertise on eachother's apps in an easy and fair way. Marketing has never been this easy!-->Advertise your mobile apps across the AppHorde network. You display ads for other apps and, in exchange, more of your own ads are displayed. Get exposure. Increase installs. Make your app successful. All for free.</p>
-			<!--<a class="signup_button" href="#">Get Started</a>-->
+			<p class="why_join">Advertise your mobile apps across the AppHorde network. You display ads for other apps and, in exchange, more of your own ads are displayed. Get exposure. Increase installs. Make your app successful. All for free.</p>
 			<div id="signup">
-				<i>Sign up for our private beta</i>
+				<i>Interested? Get on the beta list!</i>
 				{% if error %}
 				<div style="color:red;">
 					Please supply a valid email to sign up.
@@ -38,12 +36,9 @@
 					<a id="signup_submit" class="go_button">Go</a>
 				</form>
 			</div>
-			<div id="android_only">
-				Currently limited to Android
-			</div>
 		</div>
 		<div id="upper-right" class="col-right">
-			<img src={{ static_url("images/apphorde-home.png") }}/>
+			<img src={{ static_url("images/apphorde-homev2.png") }}/>
 		</div>
 	</div>
 </div>

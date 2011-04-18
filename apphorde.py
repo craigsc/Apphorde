@@ -19,6 +19,9 @@ class Application(tornado.web.Application):
 	def __init__(self):
 		handlers = [
 			(r"/", HomeHandler),
+			(r"/tos", TosHandler),
+			(r"/privacy", PrivacyHandler),
+			(r"/contact", ContactHandler),
 			(r"/register", RegisterHandler),
 			(r"/login", LoginHandler),
 			(r"/logout", LogoutHandler),
@@ -58,6 +61,18 @@ class HomeHandler(BaseHandler):
 	def get(self):
 		self.render("index.html", ref=self.get_argument("ref", None), error=self.get_argument("error", None))
 
+class TosHandler(BaseHandler):
+	def get(self):
+		self.render("tos.html", loggedin=self.current_user)
+		
+class PrivacyHandler(BaseHandler):
+	def get(self):
+		self.render("privacy.html", loggedin=self.current_user)
+		
+class ContactHandler(BaseHandler):
+	def get(self):
+		self.render("contact.html", loggedin=self.current_user)
+
 class BetaHandler(BaseHandler):
 	def post(self):
 		email = self.get_argument("email", None)
@@ -81,21 +96,25 @@ class BetaHandler(BaseHandler):
 
 class RegisterHandler(BaseHandler):
 	def get(self):
-		self.render("register.html")
+		self.render("register.html", email="", beta_invite="", accept_tos="")
 		
 	def post(self):
 		#validate registration info
 		email = self.get_argument("email", None)
 		password = self.get_argument("password", None)
 		confirm_password = self.get_argument("confirm_password", None)
+		beta_invite = self.get_argument("beta_invite", None)
 		accept_tos = self.get_argument("accept_tos", None)
 		errors = []
+		if beta_invite and beta_invite != "gojackets":
+			errors.append("Invalid beta code. Are you sure you typed it in correctly?")
+		elif not beta_invite: errors.append("Beta invite is required. <a href='/'>Get on the beta list</a>")
 		if email:
 			if not re.match(r"^[^\s@]+@[^\s@]+\.[^\s@]{2,}$", email):
 				errors.append("Email must be of the format 'something@something.xxx'.")
 			else:
 				if self.db.users.find({'email': email}).count() != 0:
-					errors.append("The supplied email has already been registered. <a href='/recover'>Forgot your password?</a>")
+					errors.append("The supplied email has already been registered.")
 		else: errors.append("Email is required.")
 		
 		if password:
@@ -117,7 +136,11 @@ class RegisterHandler(BaseHandler):
 			self.set_secure_cookie("user", user_id.binary, expires_days=1)
 			self.redirect("/dashboard")
 		else:
-			self.render("register.html", errors=errors)
+			self.render("register.html", 
+				errors=errors, 
+				email=email if email else "", 
+				accept_tos=accept_tos if accept_tos else "",
+				beta_invite=beta_invite if beta_invite else "")
 	
 class LoginHandler(BaseHandler):
 	def get(self):
@@ -227,49 +250,15 @@ class GetAdHandler(BaseHandler):
 			self.write('error')
 			return
 		
-		#Get the ad to display and update the credits
-		# rand = random.random()
-		# 		print rand
-		# 		app = self.db.apps.find_and_modify(
-		# 			query={
-		# 				'appId': {'$ne': appId},
-		# 				'credits': {'$gte': 1},
-		# 				'random': {'$gte': rand}
-		# 			},
-		# 			update={
-		# 				'$inc': {'credits': -1, 'impressions': 1}
-		# 			},
-		# 			fields={
-		# 				'icon_path': 1,
-		# 				'desc': 1,
-		# 				'package': 1,
-		# 				'appId': 1
-		# 			})
-		# 		if not app:
-		# 			app = self.db.apps.find_and_modify(
-		# 				query={
-		# 					'appId': {'$ne': appId},
-		# 					'credits': {'$gte': 1},
-		# 					'random': {'$lte': rand}
-		# 				},
-		# 				update={
-		# 					"$inc": {"credits": -1, "impressions": 1}
-		# 				},
-		# 				fields={
-		# 					'icon_path': 1,
-		# 					'desc': 1,
-		# 					'package': 1,
-		# 				})
-		
 		inventory = self.db.apps.find({'appId': {'$ne': appId}, 'credits': {'$gte': 1}})
 		count = inventory.count()
 		if count == 0:
-			#No inventory! Make some money
+			#No inventory!
 			return
 		else:
 			app = inventory.limit(-1).skip(int(random.random() * count)).next()
 			self.db.apps.update({'_id': app['_id']}, {'$inc': {'impressions': 1, 'credits': -1}})
-			self.write("OK\n%s\n%s\n%s\n%s" % (
+			self.write("OK APP\n%s\n%s\n%s\n%s" % (
 				"http://apphorde.com/%s" % app['icon_path'], 
 				app['appId'], 
 				"market://details?id=%s" % app['package'], 
@@ -285,10 +274,12 @@ class ClickHandler(BaseHandler):
 			self.db.apps.update({'appId': appId}, {'$inc': {'clicks': 1}})
 			
 class DevHandler(BaseHandler):
+	@tornado.web.authenticated
 	def get(self):
 		self.render("dev.html")
 		
 class EditAppHandler(BaseHandler):
+	@tornado.web.authenticated
 	def get(self):
 		appId = self.get_argument('id', None)
 		if not appId:
@@ -296,6 +287,8 @@ class EditAppHandler(BaseHandler):
 		else:
 			app = self.db.apps.find_one({'appId': appId})
 			self.render("editapp.html", appId=app['appId'], name=app['name'], package=app['package'], adtext=app['desc'], image=app['icon_path'])
+	
+	@tornado.web.authenticated
 	def post(self):
 		name = self.get_argument("name", None)
 		package = self.get_argument("package", None)	
@@ -355,13 +348,20 @@ class EditAppHandler(BaseHandler):
 			self.redirect("/dashboard")
 		else:
 			icon_path = self.db.apps.find_one({'appId': appId}, {'icon_path': 1})['icon_path']
-			self.render("editapp.html", errors=errors, appId=appId, name=name, 
-				package=package, adtext=description, image=icon_path)
+			self.render("editapp.html", 
+				errors=errors, 
+				appId=appId if appId else "", 
+				name=name if name else "", 
+				package=package if package else "", 
+				adtext=description if description else "", 
+				image=icon_path if icon_path else "")
 
 class MyAccountHandler(BaseHandler):
+	@tornado.web.authenticated
 	def get(self):
 		self.render("myaccount.html", email=self.current_user['email'])
-		
+	
+	@tornado.web.authenticated	
 	def post(self):
 		email = self.get_argument("email", None)
 		old_password = self.get_argument("oldpassword", None)
@@ -389,7 +389,9 @@ class MyAccountHandler(BaseHandler):
 				self.db.users.update({'_id': user['_id']}, {'$set': {'password': bcrypt.hashpw(password, bcrypt.gensalt())}})
 			self.render("myaccount.html", email=email, notifications=["Account successfully updated"])
 		else:			
-			self.render("myaccount.html", errors=errors, email=email)
+			self.render("myaccount.html", 
+			errors=errors, 
+			email=email if email else "")
 
 if __name__ == "__main__":
 	tornado.options.parse_command_line()

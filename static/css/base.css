@@ -161,9 +161,10 @@ body {
 	border-top: 1px solid #999;
 	margin: 0 5px;
 	margin-top: 40px;
-	margin-bottom: 15px;
+	margin-bottom: 10px;
 	display: block;
 	clear: both;
+	overflow: hidden;
 }
 
 #copyright {
@@ -188,6 +189,12 @@ body {
 	font-size: 11px;
 }
 
+
+/* Policies */
+.legal-container p {
+	font-family: Georgia, serif;
+	font-size: 14px;
+}
 
 /* Register */
 
@@ -258,9 +265,8 @@ a {
 }
 
 #errors {
-	color: red;
-	border: 1px solid #000;
-	background: #FFFFCC;
+	border: 1px solid red;
+	background: #FFE;
 }
 
 /* Dashboard */
@@ -387,7 +393,12 @@ a.button:active span {
 }
 
 #notification {
-	color: green;
+	background: #ffe;
+	border: 1px solid green;
+}
+
+#notification ul {
+	list-style: none;
 }
 
 .sidebar {

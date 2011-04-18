@@ -2,10 +2,8 @@
 
 {% block nav %}
 <li><a href="/">Home</a></li>
-<li><a href="how">How It Works</a></li>
-<li><a href="dev">Dev Resources</a></li>
-<li class="current-page"><a href="register">Register</a></li>
-<li><a href="login">Log In</a></li>
+<li class="current-page"><a href="register">Have an invite?</a></li>
+<li><a href="login">Log in</a></li>
 {% end %}
 
 {% block content %}
@@ -23,17 +21,21 @@
 	<div id="form-container">
 		<form method="post" action="register">
 			<label class="required" for="email">Email Address:</label>
-			<input type="text" name="email" id="email" class="fancy_input"/>
+			<input type="text" name="email" id="email" class="fancy_input" value="{{ escape(email) }}"/>
 			<p class="detail">This will be your AppHorde login</p>
 			<label class="required" for="password">Password:</label>
 			<input type="password" name="password" id="password" class="fancy_input"/>
 			<p class="detail">Minimum of 6 characters</p>
 			<label class="required" for="confirm_password">Confirm Password:</label>
 			<input type="password" name="confirm_password" id="confirm_password" class="fancy_input"/>
+			<div style="margin-top: 10px;">
+				<label class="required" for="beta_invite">Beta Invite:</label>
+				<input type="text" name="beta_invite" class="fancy_input" value="{{ escape(beta_invite) }}"/>
+			</div>
 			<div class="check">
 				<label for="accept_tos">
-					<input type="checkbox" name="accept_tos" id="accept_tos"/>
-					I agree to the AppHorde <a href="tos">Terms of Service</a>
+					<input type="checkbox" name="accept_tos" id="accept_tos" checked="{{ escape(accept_tos) }}" />
+					I agree to the AppHorde <a href="tos">Terms of Service</a> and <a href="privacy">Privacy Policy</a>
 				</label>
 			</div>
 			{{ xsrf_form_html() }}

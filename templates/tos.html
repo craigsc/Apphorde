@@ -1,0 +1,58 @@
+{% extends "subpage.html" %}
+
+{% block nav %}
+{% if loggedin %}
+<li><a href="dashboard">Dashboard</a></li>
+<li><a href="dev">Dev Resources</a></li>
+<li><a href="myaccount">My Account</a></li>
+<li><a href="logout">Log Out</a></li>
+{% else %}
+<li><a href="/">Home</a></li>
+<li><a href="register">Have an invite?</a></li>
+<li><a href="login">Log in</a></li>
+{% end %}
+{% end %}
+
+{% block subtitle %}Terms of Service{% end %}
+
+{% block main %}
+<div class="legal-container">
+<div>
+	<b>Who we are:</b>
+	<p>We are AppHorde. We currently have a SDK for Android that allows us to send and display ads on apps that have chosen to integrate our library. We also have a website that allows app developers to create ads, view ad statistics, and register their apps to receive ads from our service. These terms should be viewed in conjunction with our <a href="privacy">Privacy Policy</a></p>
+</div>
+<div>
+	<b>Our service:</b>
+	<p>Our service is simple: we make marketing easier for app developers. More specifically, we connect app developers together so that they can cross-promote their apps. By registering and integrating the AppHorde SDK, developers agree to display AppHorde ads on their own app in exchange for their own ads being displayed on the apps of other developers in the AppHorde network. We take care of the hard part, all you have to do is integrate our SDK into your app and you will be ready to go. We also provide real-time statistics so that developers can see how well their ads are performing on the network.
+</div>
+<div>
+	<b>Our rules:</b>
+	<p>By downloading and integrating the AppHorde SDK, you have agreed to our Terms of Service (aka "TOS"). Our TOS is pretty simple but if you don't follow it then we reserve the right to permanently ban you and your apps from using our service.</p>
+</div>
+<div>
+	<b>Don't be nasty:</b>
+	<p>By registering on AppHorde, you agree to not create ads that are obscene, distasteful, or pornographic in nature. Doing so will result in you and your apps being permanently banned from using the AppHorde service. Plus it's just not funny.</p>
+</div>
+<div>
+	<b>What kinds of ads will be displayed?:</b>
+	<p>Most ads will be for other apps that are also registered on the AppHorde network. The developers of these apps get to design the ad itself (custom icon and text) so we cannot guarantee what the content of each ad will be. We do moderate our ads and will work to remove any obscene or distasteful ads as swiftly as possible. We also reserve the right to display our own ads, or those from our partners, in the event that we have no ad inventory (this means that no app on the network deserves an ad placement). This is how we afford to keep this service up free of charge.</p>
+</div>
+<div>
+	<b>No guarantees:</b>
+	<p>We provide no guarantees on the service we provide: AppHorde is provided "as-is" and "as-available". We are not liable for any damages (including any legal fees) to you in connection with any component of the AppHorde service (including our website, SDK, and ads).</p>
+</div>
+<div>
+	<b>Law enforcement:</b>
+	<p>If we determine that illegal activities are taking place within the context of our services then we will contact the necessary authorities. For other information on when we will share private information, please read our <a href="privacy">Privacy Policy</a>.</p>
+</div>
+<div>
+	<b>Have questions?:</b>
+	<p>Feel free to send any questions or concerns you may have with our Terms of Service to <a href="mailto:help@apphorde.com">help@apphorde.com</a>.</p>
+</div>
+<div>
+	<b>These Terms of Service were last updated on:</b>
+	<p>April 14th, 2011</p>
+</div>
+</div>
+
+{% end %}

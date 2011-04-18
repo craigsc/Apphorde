@@ -1,0 +1,54 @@
+{% extends "subpage.html" %}
+
+{% block nav %}
+{% if loggedin %}
+<li><a href="dashboard">Dashboard</a></li>
+<li><a href="dev">Dev Resources</a></li>
+<li><a href="myaccount">My Account</a></li>
+<li><a href="logout">Log Out</a></li>
+{% else %}
+<li><a href="/">Home</a></li>
+<li><a href="register">Have an invite?</a></li>
+<li><a href="login">Log in</a></li>
+{% end %}
+{% end %}
+
+{% block subtitle %}Privacy Policy{% end %}
+
+{% block main %}
+<div class="legal-container">
+<div>
+	<b>Who we are:</b>
+	<p>We are AppHorde. We currently have a SDK for Android that allows us to send and display ads on apps that have chosen to integrate our library. We also have a website that allows app developers to create ads, view ad statistics, and register their apps to receive ads from our service.</p>
+</div>
+<div>
+	<b>Here is what our SDK collects:</b>
+	<p>Any app that integrates the AppHorde SDK will send us a notification if a user clicks on an ad, notifying us of which ad received the click. We also keep track of how many ads each app has displayed. This is the only information that we collect.</p>
+</div>
+<div>
+	<b>Here is what we do with your email:</b>
+	<p>We use the email provided as a unique username to access the AppHorde website. We will also use the provided email to notify you of AppHorde news and updates (such as updates to the SDK).</p>
+</div>
+<div>
+	<b>Here is what we share with others:</b>
+	<p>We will share any ads that you created with others via the AppHorde ad network. No other private information is shared.</p>
+</div>
+<div>
+	<b>Here is what we collect when you visit our website:</b>
+	<p>We collect the standard information, such as your IP address, browser type, and operating system information. This information is not being used in any way. We also collect cookies which are used to authenticate logged in users.</p>
+</div>
+<div>
+	<b>Disclosure to legal entities and law enforcement:</b>
+	<p>While we do not share your private information with anybody, we will share it in a situation in which the law requires it or we receive a court order. If we determine that you are performing illegal activities on the AppHorde website, SDK, or the combination of the two then we will share your private information with the proper authorities.</p>
+</div>
+<div>
+	<b>Have questions?:</b>
+	<p>Feel free to send any questions or concerns you may have with this Privacy Policy to <a href="mailto:help@apphorde.com">help@apphorde.com</a>.</p>
+</div>
+<div>
+	<b>This privacy policy was last updated on:</b>
+	<p>April 14th, 2011</p>
+</div>
+</div>
+
+{% end %}
