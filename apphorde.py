@@ -295,6 +295,7 @@ class EditAppHandler(BaseHandler):
 		description = self.get_argument("description", None)
 		icon_name = self.get_argument("icon_name", None)
 		appId = self.get_argument("appid", None)
+		print icon_name
 
 		if not appId:
 			self.redirect("/dashboard")
