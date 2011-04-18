@@ -30,7 +30,7 @@
 			<h2 class="subtitle">Quickstart Guide</h2>
 			<ol>
 				<li><b>Register</b> your app with AppHorde via the <a href="dashboard">Dashboard</a></li>
-				<li><b>Download</b> the <a href="resources/android_sdk.zip">AppHorde Android SDK</a></li>
+				<li><b>Download</b> the <a href="{{ static_url("resources/apphorde_sdk.zip") }}">AppHorde Android SDK</a></li>
 				<li>Unzip and add <b>apphorde_sdk_xxx.jar</b> to your project's build path - <a href="http://developer.android.com/resources/faq/commontasks.html#addexternallibrary">How To</a></li>
 				<li>Add the <b>internet permission</b> to your app's AndroidManifest.xml (this is to download ads):
 					<div class="code">
@@ -65,7 +65,7 @@
 				</div>
 				<div class="col-right text">
 					<div class="download-link">
-						<a href="resources/android_sdk.zip">Download the AppHorde Android SDK</a>
+						<a href="{{ static_url("resources/apphorde_sdk.zip") }}">Download the AppHorde Android SDK</a>
 					</div>
 					<div class="sdk-details">
 						Current Version: v0.7<br />
@@ -112,7 +112,7 @@
 		<div id="preference">
 			<h2 class="subtitle">Adding to Preference Screens</h2>
 			<ol>
-				<li>Save <a href="resources/apphorde.xml">apphorde.xml</a> to res/layout/ within your project.</li>
+				<li>Save <a href="{{ static_url("resources/apphorde.xml") }}">apphorde.xml</a> to res/layout/ within your project.</li>
 				<li>Modify the PreferenceActivity to contain the following:
 						<div class="code">
 							<code>
@@ -122,7 +122,7 @@
 									<span style="color:green;">
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addPreferencesFromResource(<span style="color:blue;">R.xml.settings</span>);<br />
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setContentView(R.layout.apphorde);<br />
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RelativeLayout layout = (RelativeLayout) findViewById(R.id.apphorde);<br />
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RelativeLayout layout = (RelativeLayout) findViewById(R.id.ad);<br />
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AppHordeAd ad = new AppHordeAd(this, "Your App's AppHorde ID");<br />
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;layout.addView(ad);<br />
 									</span>
