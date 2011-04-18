@@ -200,7 +200,7 @@ class RegisterAppHandler(BaseHandler):
 		if not package: 
 			errors.append("Package name is required")
 		if description:
-			if len(description) > 160: errors.append("Max ad text length is 160 characters")
+			if len(description) > 65: errors.append("Max ad text length is 65 characters")
 		else:
 			errors.append("Ad text is required")
 
@@ -308,7 +308,7 @@ class EditAppHandler(BaseHandler):
 		if not package: 
 			errors.append("Package name is required")
 		if description:
-			if len(description) > 160: errors.append("Max ad text length is 160 characters")
+			if len(description) > 65: errors.append("Max ad text length is 65 characters")
 		else:
 			errors.append("Ad text is required")
 
