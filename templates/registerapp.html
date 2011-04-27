@@ -11,7 +11,8 @@
 
 {% block main %}
 <div id="form-container">
-	<form method="post" enctype="multipart/form-data" action="{% block post_target %}registerapp{% end %}">
+	<form method="post" enctype="multipart/form-data" action="{% block post_target %}registerapp{% end %}" 
+			id="{% block form_id %}add_app_form{% end %}">
 		<label class="required" for="name">App Name:</label>
 		<input type="text" name="name" id="name" class="fancy_input"
 		{% if 'name' in globals() %}
