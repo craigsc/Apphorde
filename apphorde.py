@@ -106,7 +106,7 @@ class RegisterHandler(BaseHandler):
 		beta_invite = self.get_argument("beta_invite", None)
 		accept_tos = self.get_argument("accept_tos", None)
 		errors = []
-		if beta_invite and beta_invite != "gojackets":
+		if beta_invite and (beta_invite != "gojackets" and beta_invite != "yc" and beta_invite != "reddit"):
 			errors.append("Invalid beta code. Are you sure you typed it in correctly?")
 		elif not beta_invite: errors.append("Beta invite is required. <a href='/'>Get on the beta list</a>")
 		if email:

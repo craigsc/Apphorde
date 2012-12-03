@@ -32,7 +32,7 @@
 					{% if ref %}
 					<input type="hidden" name="ref" value={{ escape(ref) }} />
 					{% end %}
-					{{ xsrf_form_html() }}
+					{% raw xsrf_form_html() %}
 					<a id="signup_submit" class="go_button">Go</a>
 				</form>
 			</div>

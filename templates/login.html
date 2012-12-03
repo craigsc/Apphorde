@@ -28,7 +28,7 @@
 				<label class="required" for="password">Password:</label>
 				<input type="password" name="password" id="password" class="fancy_input"/>
 			</div>
-			{{ xsrf_form_html() }}
+			{% raw xsrf_form_html() %}
 			<input id="submit" type="submit" value="Login"/>
 		</div>
 	</form>
